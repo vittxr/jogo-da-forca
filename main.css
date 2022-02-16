@@ -1,0 +1,477 @@
+body { 
+    display: flex;
+    justify-content: center;
+    background-color: #2A8C82;
+}
+
+.container-wrapper {
+    display: none; /*O display muda de acordo com a condição do js.*/
+    align-items: center; /*align-items alinha horizontalmente devido ao flex-direction ser em coluna.*/
+    flex-direction: column;
+    box-sizing: border-box;
+    margin-top: 10%;
+}
+
+.instrucoes {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 500px;
+    margin-top: 20%;
+    height: 500px;
+    background-color: rgb(225, 234, 240);
+    border-radius: 10px;
+}
+
+.instrucoes button {
+    border: none;
+    background-color: rgb(100, 170, 216);
+    padding: 10px;
+    text-align: center;
+    letter-spacing: 1px;
+    line-height: 20px;
+    border-radius: 2px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bolder;
+    font-size: 18px;
+    border: 1px black solid;
+
+    overflow: hidden; /*isso para não deixar o efeito sair do elemento*/
+    position: relative; 
+        /*é preciso deixar posição como relative, para que o pseudoelemento seja alinhado de acordo com seu ancestral. Caso não tivesse essa declaração de posição, o pseudoelemento alinharia-se com a viewport.*/
+}
+
+.instrucoes button::before {
+    content: '';
+    position: absolute; /*O elemento tem posição absoluta, o que possibilita ele sobrepor seu ancestral/elemento pai.*/
+
+    left: -70px;
+    top: -50px;
+       /*Os valores de left e top precisam ser negativo para que o pseudoelemento fique escondido do botão, ou seja, seu valor precisa ser menos que o início do elemento. Caso o left e o top fossem zerados, o pseudoelemento ainda estaria aparecendo no botão, já que o valor zero alinha no início do elemento. Portanto, é necessário que eles tenham valores menores a fim de deixa-los ocultos do botão.*/
+
+    opacity: .2; /*opacidade baixa, para que o a opacidade os elementos do botão (o texto) ainda seja visto.*/
+
+    background-color: rgb(255, 255, 255);
+    width: 30px;
+    height: 150px; /*A altura tem que ser maior que o botão, ocupando o espaço, no eixo Y, inteiro. É claro que, já que o botão está inclinado, é necessário que o valor dessa prop seja maior.*/
+
+    transform: rotate(35deg); /*Inclinação do pseudoelemento*/
+    transition: all .5s ease;
+}
+
+.instrucoes button:hover::before {
+    /*Efeito de quando o mouse é passado por cima do botão*/
+
+    left: 120%; /*trás o elemento da posição -75px até a 120% à esquerda em relação ao início do botão. Devido ao left do efeito ser negativo (menor do que o left inicial), é preciso que o valor aqui ultrapasse 100%.  */
+}
+
+.descricao {
+    font-size: 20px;  
+    margin-left: 15px; 
+}
+
+.descricao ul {
+    list-style-type: circle;
+}
+
+.titulo {
+    position: absolute;
+    top: 0;
+    left: 2%;
+    font-weight: bold;
+    letter-spacing: 10px;
+    font-size: 40px;
+    color: rgba(42, 42, 122, 0.733);
+}
+
+.btn-dica {
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    right: 25rem;
+    top: 16rem;
+    background-color: #9BF2EA; 
+    padding: 5px 10px;
+    font-weight: bold;
+    
+    box-shadow: inset 1px 0 #68aaa3, 0 5px 0 #5aaaa2; 
+      /*Dá para ter mais de uma sombra no elemento. Porém, para isso, é necessário separa-las por vírgula. Ou seja, acima há 2 sombras com posicionamentos diferentes. */
+      /*A primeira sombra é dentro do elemento(comando inset faz isso), a segunda para o lado de fora mesmo (valor normal dessa prop)*/
+    border-radius: 5px;
+}
+
+.btn-dica:active {
+    /*O efeito 3D do botão é criado pelo box-shadow. A partir do momento que adicionamos ele no botão, há um sombreamento ao redor dele, certo? Portanto, basta diminuir o sombreamento para dar um efeito de pressionamento do botão.*/
+
+    top: 16.5rem; /*"abaixa" o botão um pouco para dar a impressão do botão ser pressionado quando ele for clicado. Lembrando que o valor aumenta, pois quanto maior o valor do top, mais distante ele estará do topo da tela.*/
+
+    background-color: #41BFB3;
+
+    box-shadow: inset 0 1px 0 rgb(115, 245, 232), inset 0 -5px 0 rgb(58, 119, 113); /*Quando o botão for clicado, há uma alteração nas sombras, dando a o efeito do botão estar abaixando. Mas, na verdade, é a sombra que diminui. Note que a primeira sombra tem o mesmo valor que antes, mas a segunda é invertida (quando o valor negativo, inverte a sombra, em vez de ser para fora fica para dentro)*/ 
+}
+
+
+#sortear {
+    border: none;
+    width: 100px;
+    height: 100px;
+}
+
+#sortear:hover {
+    border: 1px solid black;
+}
+
+#palavra-escolhida {
+    display: none;
+    width: 600px;
+    height: 70px;
+    background-color: #41BFB3;
+    align-items: center;
+    justify-content: center;
+    letter-spacing: 30px;
+    font-size: 20px;
+    line-height: 50px;
+    font-family: monospace;
+    margin-top: 30px;
+    padding: 10px 10px;
+    border-radius: 2%;
+
+    box-shadow: rgba(49, 51, 50, 0.322) 0px 10px; /*essa box-shadow serve apenas para dar profundidade a div. */
+}
+
+.palavra {
+    border: 1px solid black;
+    color: transparent;
+    font-size: 39px;
+    width: 40px; /*Devido a uma largura fixa, a div 'palavra-escolhida' não fica alterando de acordo com o tamanho da letra. Isso é para tal div não sair do seu box/container.*/
+}
+ 
+.letra {
+    letter-spacing: 30px;
+    font-size: 4px;
+}
+
+.container-adivinhar {
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    margin-top: 3%; 
+}
+
+.teclado {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30%;
+    flex-wrap: wrap;
+    margin: 10px;
+}
+
+.botao {
+    width: 40px;
+    height: 40px;
+    color: white;
+    background-color: #2601018f;
+    transform: perspective(-1000px) translateZ(0); 
+       /*translateZ() e perspective() adicionam perspectiva 3d ao elemento. O valor é alterado quando o botão for clicado, dando o efeito 3d. */
+}
+
+.botao:hover { 
+    /*efeito do botão, produzindo um contraste devido à inversão de cores (a cor da letra passa a ser do fundo, e a do fundo a ser da letra.*/
+    background-color: white;
+    color: #2601018f;
+}
+
+.botao:active {
+     /*animação de quando o botão for clicado. Serve para o usuário ter certeza do clique e não clicar muitas vezes.*/
+     opacity: 70%;
+     transform: perspective(1000px) translateZ(200px) /*efeito 3d*/;
+}
+
+.vidas {
+    display: flex;
+    position: absolute;
+    right: 0%;
+}
+
+/*animação do coração desaparecendo, utilizando as propriedades do svg. Infelizmente, não consegui fazer da forma que eu desejava*/
+.vidas svg path {
+    stroke-dashoffset: 32000; /*O stroke tem que ser maior que o tamanho do path para ser possível 'desenhar' com ele. O valor é obtido com js*/
+    stroke-width: 5px;
+    stroke-dasharray: 32000;
+}
+
+
+.loseLifes-animation {
+    /*animação da perda das vidas do usuário. */
+    animation: lose_hearts 1s ease-out both;
+}
+
+@keyframes lose_hearts {
+    0% {
+        opacity: 1;
+        stroke-dashoffset: 32000;
+    }
+    50% {
+       
+        opacity: 0.5;
+        stroke-dashoffset: 100;
+    }
+    100% {
+        opacity: 0;
+        stroke-dashoffset: 0;
+    }
+}
+
+
+
+/*Abaixo está as configurações de responsividade:*/
+@media (max-width: 1700px) {
+    .titulo {
+        font-size: 50px;
+     }
+
+     .btn-dica {
+         top: 16rem;
+         right: 33rem;
+     }
+     .teclado {
+         width: 40%;
+     }
+     .vidas {
+         top: 13%;
+         right: 5%;
+         display: flex;
+     }
+}
+@media (max-width: 1600px) {
+    .titulo {
+        font-size: 50px;
+     }
+
+     .btn-dica {
+         top: 16rem;
+         right: 30rem;
+     }
+     .teclado {
+         width: 40%;
+     }
+     .vidas {
+         top: 13%;
+         right: 5%;
+         display: flex;
+     }
+}
+
+@media (max-width: 1500px) {
+    .titulo {
+        font-size: 50px;
+     }
+
+     .btn-dica {
+         top: 16rem;
+         right: 27rem;
+     }
+     .teclado {
+         width: 40%;
+     }
+     .vidas {
+         top: 13%;
+         right: 5%;
+         display: flex;
+     }
+}
+
+@media (max-width: 1400px) {
+    .titulo {
+        font-size: 50px;
+     }
+
+     .btn-dica {
+         top: 16rem;
+         right: 22rem;
+     }
+     .teclado {
+         width: 40%;
+     }
+     .vidas {
+         top: 13%;
+         right: 5%;
+         display: flex;
+     }
+}
+
+@media (max-width: 1300px) {
+    .titulo {
+        font-size: 50px;
+     }
+
+     .btn-dica {
+         top: 16rem;
+         right: 21rem;
+     }
+     .teclado {
+         width: 40%;
+     }
+     .vidas {
+         top: 13%;
+         right: 5%;
+         display: flex;
+     }
+}
+
+@media (max-width: 1200px) {
+    .titulo {
+        font-size: 50px;
+     }
+ 
+     .btn-dica {
+         top: 16rem;
+         right: 18rem;
+     }
+     .teclado {
+         width: 40%;
+     }
+     .vidas {
+         top: 14%;
+         right: 5%;
+         display: flex;
+         
+     }
+}
+
+
+@media (max-width: 1100px) {
+    .titulo {
+        font-size: 50px;
+     }
+     .btn-dica {
+         top: 16rem;
+         right: 16rem;
+     }
+     .teclado {
+         width: 40%;
+     }
+     .vidas {
+         top: 15%;
+         right: 1%;
+         display: flex;
+         flex-direction: column;     
+     }
+}
+
+@media (max-width: 1000px) {
+    .titulo {
+        font-size: 50px;
+     }
+     .btn-dica {
+         top: 15rem;
+         right: 10rem;
+     }
+     #palavra-escolhida {
+        width: 100%;
+        font-size: 30px;
+        letter-spacing: 20px;
+        font-family: monospace;
+    }
+     .vidas {
+         right: 0;
+         display: flex;
+     }
+}
+
+@media (max-width: 900px) {
+    .titulo {
+       font-size: 30px;
+    }
+
+    .btn-dica {
+        top: 14rem;
+        right: 10rem;
+    }
+    #palavra-escolhida {
+        width: 100%;
+        font-size: 30px;
+        letter-spacing: 20px;
+        font-family: monospace;
+    }
+    .vidas {
+        right: 10px;
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 750px) {
+    .titulo {
+       font-size: 30px;
+    }
+    .btn-dica {
+        top: 25rem;
+        right: 20rem
+    }
+    #palavra-escolhida {
+        width: 100%;
+        font-size: 30px;
+        letter-spacing: 20px;
+        font-family: monospace;
+    }
+    .teclado {
+        width: 70%;
+    }
+    .vidas {
+        display: flex;
+        flex-direction: column;
+        top: 30%;
+    }
+}
+
+@media (max-width: 650px) {
+    .titulo {
+       font-size: 30px;
+    }
+    .btn-dica {
+        top: 25rem;
+        right: 17rem
+    }
+    #palavra-escolhida {
+        width: 100%;
+        font-size: 30px;
+        letter-spacing: 20px;
+        font-family: monospace;
+    }
+    .teclado {
+        width: 70%;
+    }
+    .vidas {
+        display: flex;
+        flex-direction: column;
+        top: 30%;
+    }
+}
+
+@media (max-width: 550px) {
+    .titulo {
+       font-size: 30px;
+    }
+    .btn-dica {
+        top: 14rem;
+        right: 6rem;
+    }
+    #palavra-escolhida {
+        width: 100%;
+        font-size: 30px;
+        letter-spacing: 10px;
+        font-family: monospace;
+    }
+    .teclado {
+        width: 50%;
+    }
+    .vidas {
+        display: flex;
+        flex-direction: column;
+        right: 0;
+    }
+}
+
