@@ -109,6 +109,11 @@ function win() {
    var valueOfInput=input.value;
 
    if(valueOfInput==palavra) {
+      arr.forEach((value, index) => {
+         //Quando o usuário ganhar, é necessário fazer aparecer todas as letras. Usei o forEach para isso. Para cada posição do arr, faça com que a cor do valor mude. Esse comando é semelhante ao loop do 'verificaLetra()', mas já que esse não precisa condicional a cada iteração, fica mais adequado usar o forEach mesmo. 
+         arr[index].style.color='black'
+      }) 
+
       alert('Você ganhou!');
    } else {
       alert('palavra incorreta');
