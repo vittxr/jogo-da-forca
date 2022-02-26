@@ -104,7 +104,7 @@ body {
 .btn-dica:active {
     /*O efeito 3D do botão é criado pelo box-shadow. A partir do momento que adicionamos ele no botão, há um sombreamento ao redor dele, certo? Portanto, basta diminuir o sombreamento para dar um efeito de pressionamento do botão.*/
 
-    top: 16.5rem; /*"abaixa" o botão um pouco para dar a impressão do botão ser pressionado quando ele for clicado. Lembrando que o valor aumenta, pois quanto maior o valor do top, mais distante ele estará do topo da tela.*/
+    top: 14.5rem; /*"abaixa" o botão um pouco para dar a impressão do botão ser pressionado quando ele for clicado. Lembrando que o valor aumenta, pois quanto maior o valor do top, mais distante ele estará do topo da tela.*/
 
     background-color: #41BFB3;
 
@@ -366,9 +366,9 @@ body {
         font-size: 50px;
      }
      .btn-dica {
-         top: 15rem;
-         right: 10rem;
-     }
+        top: 15rem;
+        right: 10rem;
+    }
      #palavra-escolhida {
         width: 100%;
         font-size: 30px;
@@ -385,7 +385,6 @@ body {
     .titulo {
        font-size: 30px;
     }
-
     .btn-dica {
         top: 14rem;
         right: 10rem;
